@@ -59,8 +59,10 @@ public class PresentationG1 {
 	  
 	  
 	   String userName = tfUser.getText();
-	   String database = tfDatabase.getText();   
-	       
+
+     String database = new String();
+	   String databaseInput = tfDatabase.getText();   
+	      
 	       
 	   String password = new String();
 	   String passwordInput = new String();
@@ -74,6 +76,14 @@ public class PresentationG1 {
 	    {
 	  	     password = passwordInput;
         }
+
+        if (databaseInput.equalsIgnoreCase("")) {
+          database = "group1";
+       } 
+       else 
+       {
+            database = databaseInput;
+         }
       
       
       
@@ -86,49 +96,49 @@ public class PresentationG1 {
 
    } 
 
-   public int insertCandidate(){
-    System.out.print("Candiate First Name: ");
-    String fname = GetInput.readLine();
-    System.out.print("Candiate Last Name: ");
-    String lname = GetInput.readLine();
-    System.out.print("Candiate Job Title: ");
-    String jobTitle = GetInput.readLine();
-    int newID = dl.addCandidate(fname,lname,jobTitle);
-        return newID;
-   }
+  //  public int insertCandidate(){
+  //   System.out.print("Candiate First Name: ");
+  //   String fname = GetInput.readLine();
+  //   System.out.print("Candiate Last Name: ");
+  //   String lname = GetInput.readLine();
+  //   System.out.print("Candiate Job Title: ");
+  //   String jobTitle = GetInput.readLine();
+  //   int newID = dl.addCandidate(fname,lname,jobTitle);
+  //       return newID;
+  //  }
 
-   public int insertSkills(){
-    System.out.print("Candiate ID: ");
-    int canID = GetInput.readInt();
-    System.out.print("Candiate Skill(s) seperated by commas NO spaces: ");
-    String skillraw = GetInput.readLine();
-    skillraw.strip();
-    String[] skills = skillraw.split(",");
-    int newID = dl.addSkill(canID,skills);
-        return newID;
-   }
+  //  public int insertSkills(){
+  //   System.out.print("Candiate ID: ");
+  //   int canID = GetInput.readInt();
+  //   System.out.print("Candiate Skill(s) seperated by commas NO spaces: ");
+  //   String skillraw = GetInput.readLine();
+  //   skillraw.strip();
+  //   String[] skills = skillraw.split(",");
+  //   int newID = dl.addSkill(canID,skills);
+  //       return newID;
+  //  }
 
-   public LinkedList<Integer> getCandidateRecords(){
-    candidateRecords = dl.getCandidateChoices();
-    //System.out.println("\nThe Number of possible candidate records is -----> " + candidateRecords);
-    return candidateRecords;
-  }
+  //  public LinkedList<Integer> getCandidateRecords(){
+  //   candidateRecords = dl.getCandidateChoices();
+  //   //System.out.println("\nThe Number of possible candidate records is -----> " + candidateRecords);
+  //   return candidateRecords;
+  // }
 
-  public void printSkills(int candidateID){
-    //Created print skills here because datalayer is not supposed to touch presentation
-    LinkedList<String> candidateInfo = dl.getCandidateSkill(candidateID);
-    String heading = new String();
-    heading = "\nDatabase candidateSkills\n";
-    heading += "ID \tCandidate Name \t        Skills";
-    System.out.println(heading);
-    System.out.println(candidateInfo);
-    if(candidateInfo.isEmpty()){
-        System.out.println("This user has no skills! Please insert!");
-    } else{
-        System.out.println(candidateInfo.get(0) + "    " + candidateInfo.get(1) + "          " + candidateInfo.get(2));
-    }
-    //System.out.printf("%3d      %-22s %-60s",candidateInfo.get(0),candidateInfo.get(1),candidateInfo.get(2));
-  }
+  // public void printSkills(int candidateID){
+  //   //Created print skills here because datalayer is not supposed to touch presentation
+  //   LinkedList<String> candidateInfo = dl.getCandidateSkill(candidateID);
+  //   String heading = new String();
+  //   heading = "\nDatabase candidateSkills\n";
+  //   heading += "ID \tCandidate Name \t        Skills";
+  //   System.out.println(heading);
+  //   System.out.println(candidateInfo);
+  //   if(candidateInfo.isEmpty()){
+  //       System.out.println("This user has no skills! Please insert!");
+  //   } else{
+  //       System.out.println(candidateInfo.get(0) + "    " + candidateInfo.get(1) + "          " + candidateInfo.get(2));
+  //   }
+  //   //System.out.printf("%3d      %-22s %-60s",candidateInfo.get(0),candidateInfo.get(1),candidateInfo.get(2));
+  // }
 
 
    public static void main(String [] args){
