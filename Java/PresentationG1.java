@@ -22,7 +22,7 @@ public class PresentationG1 {
 
 
    public PresentationG1(){
-      System.out.println("Connecting to the database candidateskills . . .");
+      System.out.println("Connecting to the Group 1 database . . .");
       
       
       
@@ -55,7 +55,7 @@ public class PresentationG1 {
 	  
 	  
 	  JOptionPane.showMessageDialog(null, Inputbox,
-	  		 "Input    Default password is \"student\"", JOptionPane.QUESTION_MESSAGE);
+	  		 "Default password is \"student\", default db is \"group1\"", JOptionPane.QUESTION_MESSAGE);
 	  
 	  
 	   String userName = tfUser.getText();
