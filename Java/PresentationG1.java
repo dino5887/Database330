@@ -1,4 +1,4 @@
-// Brenden Becker, Sophia Castiglione, Hunter
+// Brenden Becker, Sophia Castiglione, Hunter Ross
 // ISTE 330
 // Group Project Team #1
 
