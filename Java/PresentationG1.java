@@ -99,7 +99,9 @@ public class PresentationG1 {
          System.out.println("1. Add Faculty");
          System.out.println("2. Delete Faculty");
          System.out.println("3. Update Faculty");
-         System.out.println("4. Exit\n");
+         System.out.println("4. Add Student");
+         System.out.println("5. Search Faculty Interests");
+         System.out.println("6. Exit\n");
          System.out.print("Selection: ");
          choice = GetInput.readInt();
          switch(choice){
@@ -132,6 +134,34 @@ public class PresentationG1 {
                System.out.println("Update");
                break;
             case 4:
+               System.out.println("--- Adding a new Student ---");
+               System.out.println("Enter studentID: ");
+               int studentID = GetInput.readInt();
+               System.out.println("Enter last name: ");
+               String slName = GetInput.readLine();
+               System.out.print("Enter First Name: ");
+               String sfName = GetInput.readLine();
+               System.out.print("Enter Username: ");
+               String suName = GetInput.readLine();
+               System.out.print("Enter Password: ");
+               String spasswd = GetInput.readLine();
+               System.out.print("Enter Email: ");
+               String semail = GetInput.readLine();
+               System.out.print("Enter String of student intersts \n MUST have comamas(,) seperating intersts: ");
+               String sinterest = GetInput.readLine();
+               System.out.println("The Major Number Choices are:");
+               System.out.print("Enter Major: ");
+               int smajor = GetInput.readInt();
+               dl.addStudent(studentID, slName, sfName, suName, spasswd, semail, sinterest, smajor);
+               break;
+
+            case 5:
+               System.out.println("--- Searching Faculty ---");
+               System.out.println("Enter studentID: ");
+               int studentIDf = GetInput.readInt();
+               LinkedList<Integer> facultyInterested = dl.getFacultyIntersectionList(studentIDf);
+               break;
+            case 6:
                running = false;
                break;
             default:

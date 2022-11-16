@@ -51,7 +51,7 @@ public class DataG1{
       int result = 0;
             try{
                // prepared statement
-               String sql = "INSERT INTO Faculty (facultyID, departmentID, lastName, firstName, username, password, email) VALUES (?,?,?,?,?,?,?)";
+               String sql = "INSERT INTO faculty (facultyID, departmentID, lastName, firstName, username, password, email) VALUES (?,?,?,?,?,?,?)";
                PreparedStatement ps = conn.prepareStatement(sql);
                ps.setInt(1, facultyID);
                ps.setInt(2, departmentID);
@@ -80,7 +80,7 @@ public class DataG1{
       System.out.println("--- DELETE started ---");
       try {    
          // Prepared sql statement   
-         sql =  "DELETE FROM Faculty WHERE facultyID=?";
+         sql =  "DELETE FROM faculty WHERE facultyID=?";
          PreparedStatement stmt = conn.prepareStatement(sql);
       
          // bind values into the parameters
@@ -108,84 +108,109 @@ public class DataG1{
    }// end of deleteFaculty function
 
 
-//    public LinkedList<Integer> getCandidateChoices(){
-//     LinkedList<Integer> ids = new LinkedList<Integer>();
-//     try{
-//     stmt = conn.createStatement();
-//     sql = "select candidate_ID from candidate";
-//     rs = stmt.executeQuery(sql);
 
-//     while(rs.next()){
-//         ids.add(rs.getInt(1));
-//     }
+   public int addStudent(int studentID, String lName, String fName, String uName, String passwd, String email, String interestUncut, int major){
+      int result = 0;
+            try{
+               // prepared statement
+               String sql = "INSERT INTO student (studentID, lastName, firstName, username, password, email) VALUES (?,?,?,?,?,?)";
+               PreparedStatement ps = conn.prepareStatement(sql);
+               ps.setInt(1, studentID);
+               ps.setString(2, fName);
+               ps.setString(3, lName);
+               ps.setString(4, uName);
+               ps.setString(5, passwd);
+               ps.setString(6, email);
+               
+               result = ps.executeUpdate();
 
-//     } catch(SQLException sqle){
-//         System.out.println("SQL EXCEPTION");
-//         sqle.printStackTrace();
-//         return null;
-//     }
-
-//     return ids;
-
-//    }
-
-
-//    public LinkedList<String> getCandidateSkill(int canID){
-//     LinkedList<String> candidateInfo = new LinkedList<String>();
-//     try{
-//         stmt = conn.createStatement();
-//         sql = "call get_candidate_skill(" + canID + ")";
-//         rs = stmt.executeQuery(sql);
-//         String output = new String();
-
-//         while(rs.next()){
-//             candidateInfo.add(Integer.toString(rs.getInt(1)));
-//             candidateInfo.add(rs.getString(2));
-//             candidateInfo.add(rs.getString(3));
-//         }
-    
-//         } catch(SQLException sqle){
-//             System.out.println("UNREAL CANDIDATE ID");
-//             sqle.printStackTrace();
-//             return null;
-//         }
+               if(addStudentInterest(studentID, interestUncut) < 1){
+                  System.out.println("addStudentInterest Failed!");
+               }
+               if(addStudentMajor(studentID, major) < 1){
+                  System.out.println("addStudentMajor Failed!");
+               }
 
 
-//     return candidateInfo;
-//    }
-   
-   
-//    public int addCandidate(String fname, String lname, String jobTitle){
-//       try{
+               return(result);
+               
+            }// End of try
+            catch(SQLException sqle){
+               sqle.printStackTrace();
+               return -1;
+            }
+    }
+
+    public int addStudentInterest(int studentID, String interestUncut){
+      int result = 0;
+            try{
+               // prepared statement
+               String sql = "INSERT INTO studentinterests (studentID, keyword) VALUES (?, ?)";
+               PreparedStatement ps = conn.prepareStatement(sql);
+               ps.setInt(1, studentID);
+               ps.setString(2, interestUncut);
+               result = ps.executeUpdate();
+               return(result);
+               
+            }// End of try
+            catch(SQLException sqle){
+               sqle.printStackTrace();
+               return -1;
+            }
+    }
+
+
+    public int addStudentMajor(int studentID, int major){
+      int result = 0;
+            try{
+               // prepared statement
+               String sql = "INSERT INTO studentmajor (studentID, majorID) VALUES (?, ?)";
+               PreparedStatement ps = conn.prepareStatement(sql);
+               ps.setInt(1, studentID);
+               ps.setInt(2, major);
+               result = ps.executeUpdate();
+               return(result);
+               
+            }// End of try
+            catch(SQLException sqle){
+               sqle.printStackTrace();
+               return -1;
+            }
+    }
+
+
+   public LinkedList<Integer> getFacultyIntersectionList(int studentID){
+      LinkedList<Integer> IntersectionList = new LinkedList<>();
+      //Iterates through the rows of faculty to search for intersections between their abstract and the student's intersts
       
-//       	stmt = conn.createStatement();
-// 			sql = "INSERT INTO candidate(lastName, firstName, jobTitle) VALUES('"+ lname +"', '" + fname + "', '" + jobTitle + "')";
-// 			resultAdd = stmt.executeUpdate(sql);
+      String studentInterestUncut;
+      try{
+         // prepared statement
+         String sql = "SELECT keyword FROM studentinterests WHERE studentID = " + studentID;
+         PreparedStatement ps = conn.prepareStatement(sql);
+         ResultSet rs = ps.executeQuery();
+         rs.next();
+         studentInterestUncut = rs.getString(1);
+         System.out.println("TESTING CODE student Interest is: " + studentInterestUncut);
+      }// End of try
+      catch(SQLException sqle){
+         sqle.printStackTrace();
+         System.out.println("STUDENT DOES NOT EXIST! Enter a different ID");
+         return null;
+      }
 
-//       }
-//       catch(SQLException sqle){
-//        System.out.println("ERROR MESSAGE -> "+sqle);
-//        System.out.println("ERROR SQLException in addCandidate()");
-//       }
-//       LinkedList<Integer> output = getCandidateChoices();
-//       return output.getLast();
-//    } 
+      //Now tokenize the studentIntests into individual interests
+      studentInterestUncut = studentInterestUncut.strip();
+      String[] studentInterestCut = studentInterestUncut.split(",");
 
-//    public int addSkill(int canID, String[] skills){
-//     resultAdd = 0;
-//     try{
-//         for(int i = 0; i < skills.length; i++){
-//           stmt = conn.createStatement();
-//           sql = "INSERT INTO candidate_skill VALUES("+ canID +", " + skills[i] + ")";
-//           resultAdd += stmt.executeUpdate(sql);
-//         }
-//     }
-//     catch(SQLException sqle){
-//      System.out.println("ERROR MESSAGE -> "+sqle);
-//      System.out.println("ERROR SQLException in addSkill()");
-//     }
-//     return resultAdd;
-//  } 
+      //Get all Interests and Abstracts from Faculty
+      
+
+
+
+      return IntersectionList;
+   }
+
 
 
 
