@@ -54,10 +54,27 @@ CREATE TABLE FacultyPhone(
 DROP TABLE IF EXISTS Abstract;
 CREATE TABLE Abstract(
     abstractID INT(4) UNSIGNED NOT NULL,
-    abstractTitle VARCHAR(45) NOT NULL,
+    abstractTitle VARCHAR(150) NOT NULL,
     abstract MEDIUMTEXT NOT NULL,
     PRIMARY KEY (abstractID)
 );
+
+INSERT INTO Abstract VALUES (0001, "Distance Learning as a Levelling Tool for People with Disabilities", "Distance learning has brought phenomenal changes to the educational playing field. 
+In higher education, variances of distance learning can mean blended learning, flipped classrooms, or video modules/components. While distance learning results in no physical in-person interaction, 
+online supplements physical interpersonal interactions. This paper will focus on distance learning in relation to people with disabilities, demonstrating the challenges that are faced with providing access to learners."),
+(0002, "Work In Progress: Tablet PC's as a Leveling Device!", "Hewlett Packard Tablet PC's were used to alter the accessibility of the academic learning environment within a core information technology course 
+entitled 'Needs Assessment.' This class deals with the softer side of IT, as it relates to communication and information-gathering. Taught in a classroom, technology has not been a part of the course learning style. 
+The implementation of wireless tablet PC's augmented the curriculum on several levels. Interactions between diverse students (RIT has 1500 Deaf and hard of hearing students, due to the presence of the National Technical 
+Institute for the Deaf) were impacted positively. The ability for students to communicate online while working face to face was unique, and the collaborative learning experience was heightened due to the functionality of the Tablets. 
+However, there were also interesting trade-offs. In addition, it was discovered that students with other disabilities benefited in ways that were not anticipated"), (0003, "Teaching game AI through Minecraft mods", 
+"One of the issues with teaching artificial intelligence (AI) for games is that many AI algorithms work in theory, but have production consequences in terms of speed or memory when actually used in a game. We report on 
+the benefits and drawbacks of modifying or “modding” the commercial game Minecraft for a course on Game AI. This was done to give students the experience of dealing with a commercial game environment where they would have to worry 
+about production consequences with their algorithms. The course was run as an upper level undergraduate elective during the fall of 2011 and included assignments on dynamic terrain generation, character behavior, and world events."),
+(0004, "Using a low-cost open source hardware development platform in teaching young students programming skills", "The teaching of programming skills to young students is often described by those educators involved as problematic 
+at best. Student issues like mathematical maturity, readiness for complex thought, basic problem solving skills, short attention span especially related to the boredom of traditional programming teaching methodologies, and the lack 
+of exciting problems and their solutions with respect to programming assignments contribute to the angst of many a programming instructor. A small fraction of students who 'were just made for programming' always seem to succeed 
+at whatever programming problem is given to them. However, a majority of students, especially precollege and college freshmen tend to have difficulty in overcoming these issues. It is with that observation that something new, in terms 
+of programming pedagogy, needed to be investigated by this paper's authors.");
 
 DROP TABLE IF EXISTS FacultyAbstract;
 CREATE TABLE FacultyAbstract(
@@ -67,6 +84,8 @@ CREATE TABLE FacultyAbstract(
     CONSTRAINT facultyAbstract_faculty_fk FOREIGN KEY (facultyID) REFERENCES Faculty (facultyID),
     CONSTRAINT facultyAbstract_abstract_fk FOREIGN KEY (abstractID) REFERENCES Abstract (abstractID)
 );
+
+INSERT INTO FacultyAbstract VALUES (112023489, 0001), (112023489, 0002), (220111345, 0003), (111789000, 0004);
 
 DROP TABLE IF EXISTS FacultyLocation;
 CREATE TABLE FacultyLocation(
@@ -84,6 +103,9 @@ CREATE TABLE FacultyInterests(
     PRIMARY KEY (facultyID, keyword),
     CONSTRAINT facultyInterests_faculty_fk FOREIGN KEY (facultyID) REFERENCES Faculty (facultyID)
 );
+
+INSERT INTO FacultyInterests VALUES (112023489, "Accessibility"), (112023489, "Human-Computer Interaction"), (220111345, "Accessibility"), (220111345, "Computing Education"),
+(220111345, "Game Design and Development"), (111789000, "Computing Education");
 -- FACULTY TABLES END / STUDENT TABLES START
 
 DROP TABLE IF EXISTS Student;
