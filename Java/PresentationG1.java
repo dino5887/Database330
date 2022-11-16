@@ -93,7 +93,7 @@ public class PresentationG1 {
 
       boolean running = true;
       int choice = 0;
-      PresentationG1 present = new PresentationG1();
+      //PresentationG1 present = new PresentationG1();
       while(running){
          System.out.println("Enter an option");
          System.out.println("1. Add Faculty");
