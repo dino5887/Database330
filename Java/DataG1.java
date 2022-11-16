@@ -47,17 +47,19 @@ public class DataG1{
    }
 
    // Inserts a new faculty member
-   public int addFaculty(String lName, String fName, String uName, String passwd, String email){
+   public int addFaculty(int facultyID, int departmentID, String lName, String fName, String uName, String passwd, String email){
       int result = 0;
             try{
                // prepared statement
-               String sql = "INSERT INTO Faculty (lastName, firstName, username, password, email) VALUES (?,?,?,?,?)";
+               String sql = "INSERT INTO Faculty (facultyID, departmentID, lastName, firstName, username, password, email) VALUES (?,?,?,?,?,?,?)";
                PreparedStatement ps = conn.prepareStatement(sql);
-               ps.setString(1, fName);
-               ps.setString(2, lName);
-               ps.setString(3, uName);
-               ps.setString(4, passwd);
-               ps.setString(5, email);
+               ps.setInt(1, facultyID);
+               ps.setInt(2, departmentID);
+               ps.setString(3, fName);
+               ps.setString(4, lName);
+               ps.setString(5, uName);
+               ps.setString(6, passwd);
+               ps.setString(7, email);
                
                result = ps.executeUpdate();
                String stmt = "SELECT LAST_INSERT_ID()";

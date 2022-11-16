@@ -105,6 +105,10 @@ public class PresentationG1 {
          switch(choice){
             case 1:
                System.out.println("--- Adding a new faculty member ---");
+               System.out.println("Enter facultyID: ");
+               int facultyID = GetInput.readInt();
+               System.out.println("Enter departmentID: ");
+               int departmentID = GetInput.readInt();
                System.out.println("Enter last name: ");
                String lName = GetInput.readLine();
                System.out.print("Enter First Name: ");
@@ -116,8 +120,7 @@ public class PresentationG1 {
                System.out.print("Enter Email: ");
                String email = GetInput.readLine();
 
-               int facultyID = dl.addFaculty(lName, fName, uName, passwd, email);
-               //return facultyID;
+               dl.addFaculty(facultyID, departmentID, lName, fName, uName, passwd, email);
                break;
             case 2:
                System.out.println("--- Deleting a faculty member ---");
