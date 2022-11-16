@@ -4,6 +4,9 @@
 
 // This code is the Data Layer
 import java.sql.*;
+import java.util.Dictionary;
+import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.LinkedList;
 
 public class DataG1{
@@ -180,9 +183,13 @@ public class DataG1{
 
 
    public LinkedList<Integer> getFacultyIntersectionList(int studentID){
-      LinkedList<Integer> IntersectionList = new LinkedList<>();
+      //Brenden Search Code
+      LinkedList<Integer> intersectionList = new LinkedList<>();
+      LinkedList<Integer> intersectionAbstractIDs = new LinkedList<>();
       //Iterates through the rows of faculty to search for intersections between their abstract and the student's intersts
       
+      Dictionary<String,Integer> dictionaryAbstracts = new Hashtable<String,Integer>(); 
+
       String studentInterestUncut;
       try{
          // prepared statement
@@ -191,7 +198,7 @@ public class DataG1{
          ResultSet rs = ps.executeQuery();
          rs.next();
          studentInterestUncut = rs.getString(1);
-         System.out.println("TESTING CODE student Interest is: " + studentInterestUncut);
+         //System.out.println("TESTING CODE student Interest is: " + studentInterestUncut);
       }// End of try
       catch(SQLException sqle){
          sqle.printStackTrace();
@@ -201,14 +208,117 @@ public class DataG1{
 
       //Now tokenize the studentIntests into individual interests
       studentInterestUncut = studentInterestUncut.strip();
+      studentInterestUncut = studentInterestUncut.toLowerCase();
       String[] studentInterestCut = studentInterestUncut.split(",");
 
-      //Get all Interests and Abstracts from Faculty
+      String facultyAbstractString;
+      LinkedList<String> facultyAbstractList = new LinkedList<>();   
+      //Get all Abstracts from Faculty
+            try{
+         // prepared statement
+         String sql = "SELECT abstractID, abstract FROM abstract";
+         PreparedStatement ps = conn.prepareStatement(sql);
+         ResultSet rs = ps.executeQuery();
+         rs.next();
+         do {
+         int facultyAbstractID = rs.getInt(1);
+         facultyAbstractString = rs.getString(2);
+         facultyAbstractString = facultyAbstractString.toLowerCase();
+         facultyAbstractList.add(facultyAbstractString);
+         //Adds the string to the list
+         
+         dictionaryAbstracts.put(facultyAbstractString, facultyAbstractID);
+
+         } while(rs.next());
+         //Adds all abstract strings to a list
+         //System.out.println("TESTING CODE Abstract is: " + FacultyAbstractString);
+      }// End of try
+      catch(SQLException sqle){
+         sqle.printStackTrace();
+         System.out.println("FACULTY ABSTRACT GET FAILED!!!");
+         return null;
+      }
+
+      //Uses my Rabin-Karp code to searh all the abstracts for all the keywords
+      for(int interestIndex = 0; interestIndex < studentInterestCut.length - 1; interestIndex++ ){
+
+
+         while(!facultyAbstractList.isEmpty()){
+            String currentAbstract = facultyAbstractList.pop();
+            //Removes an abstract from the list until it is empty
+            
+            //Checks if rabinKarp returns anything, if it does then one of the interests exists
+            if(StringSearch.rabinKarpMultiple(studentInterestCut[interestIndex], currentAbstract ) != null){
+               intersectionAbstractIDs.add(dictionaryAbstracts.get(currentAbstract));
+            }
+         }
+      }
+
+      while(!intersectionAbstractIDs.isEmpty()){
+
+         try{
+            // prepared statement
+            String sql = "SELECT facultyID FROM facultyabstract WHERE facultyID = " + intersectionAbstractIDs.pop();
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            
+            rs.next();
+            int newFacultyID = rs.getInt(1);
+
+         }// End of try
+         catch(SQLException sqle){
+            sqle.printStackTrace();
+            System.out.println("INTERSECTION ABSTRACT COMPARISON FAILED");
+            return null;
+         }
+
+      }
+
+
+      //This code takes interests from the faculty interest table and adds them to the output if they are new
+      String facultyInterestUncut;
+      try{
+         // prepared statement
+         String sql = "SELECT keyword FROM facultyinterests";
+         PreparedStatement ps = conn.prepareStatement(sql);
+         ResultSet rs = ps.executeQuery();
+         rs.next();
+         facultyInterestUncut = rs.getString(1);
+         //System.out.println("TESTING CODE student Interest is: " + studentInterestUncut);
+      }// End of try
+      catch(SQLException sqle){
+         sqle.printStackTrace();
+         System.out.println("FACULTY INTEREST SEARCH FAILED");
+         return null;
+      }
+
+      //Now tokenize the studentIntests into individual interests
+      facultyInterestUncut = facultyInterestUncut.strip();
+      facultyInterestUncut = facultyInterestUncut.toLowerCase();
+      String[] facultyInterestCut = facultyInterestUncut.split(",");
+
+
+      for(int interestIndex = 0; interestIndex < studentInterestCut.length - 1; interestIndex++ ){
+
+         
+         for(int facIndex = 0; facIndex < facultyInterestCut.length; facIndex++){
+            
+            //Checks if rabinKarp returns anything, if it does then one of the interests exists
+            if(StringSearch.rabinKarpMultiple(studentInterestCut[interestIndex], facultyInterestCut[facIndex] ) != null){
+               int currentAbstractID = dictionaryAbstracts.get(facultyInterestCut[facIndex]);
+               if( intersectionList.contains(currentAbstractID))
+               intersectionList.add(currentAbstractID);
+            }
+         }
+      }
+
       
 
 
 
-      return IntersectionList;
+
+
+      return intersectionList;
    }
 
 

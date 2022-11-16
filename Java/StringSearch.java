@@ -5,7 +5,7 @@ public class StringSearch {
 
    //This is Brenden Becker's Code from ISTE222
 
-   static int rabinKarp(String str, String substr) {
+   public static int rabinKarp(String str, String substr) {
       int strLength = str.length();
       int subLength = substr.length();
       int strHash = 0; // hash value for str window
@@ -47,7 +47,7 @@ public class StringSearch {
       return -1;
    }
 
-   static LinkedList<Integer> rabinKarpMultiple(String str, String substr) {
+   public static LinkedList<Integer> rabinKarpMultiple(String str, String substr) {
       LinkedList<Integer> output = new LinkedList<Integer>();
       int strLength = str.length();
       int subLength = substr.length();
