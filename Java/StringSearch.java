@@ -4,8 +4,7 @@ public class StringSearch {
     
 
    //This is Brenden Becker's Code from ISTE222
-
-   public static int rabinKarp(String str, String substr) {
+    static int rabinKarp(String str, String substr) {
       int strLength = str.length();
       int subLength = substr.length();
       int strHash = 0; // hash value for str window
@@ -47,7 +46,7 @@ public class StringSearch {
       return -1;
    }
 
-   public static LinkedList<Integer> rabinKarpMultiple(String str, String substr) {
+   static LinkedList<Integer> rabinKarpMultiple(String str, String substr) {
       LinkedList<Integer> output = new LinkedList<Integer>();
       int strLength = str.length();
       int subLength = substr.length();
@@ -92,6 +91,19 @@ public class StringSearch {
       }
 
       return output;
+   }
+
+   public static void main(String[] args) {
+      String str = "Future events such as these will effect you in the future";
+      String substr = "uch";
+      String dna = "GTTGCAGTTACTTATTATCTGAAAACCAGTTGATGTTAAGGAATACTCTGTCTAAGACAACATATGTAATAAAAATTATATATTCGTTGGGTTCTCTCGA";
+      String subdna = "GTT";
+      
+      //System.out.println("Brute Force Index = " + bruteForce(str, substr));
+      //System.out.println("Rabin Karp Index = " + rabinKarp(str, substr));
+      System.out.println("Rabin Karp Index = " + rabinKarpMultiple(dna, subdna));
+
+
    }
 
                

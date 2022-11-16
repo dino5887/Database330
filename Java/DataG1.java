@@ -246,9 +246,11 @@ public class DataG1{
          while(!facultyAbstractList.isEmpty()){
             String currentAbstract = facultyAbstractList.pop();
             //Removes an abstract from the list until it is empty
-            
+
             //Checks if rabinKarp returns anything, if it does then one of the interests exists
-            if(StringSearch.rabinKarpMultiple(studentInterestCut[interestIndex], currentAbstract ) != null){
+
+            //System.out.println("STUDENT INTEREST CUT: " + studentInterestCut[interestIndex] + "    CURRENT ABSTRACT " + currentAbstract );
+            if(StringSearch.rabinKarpMultiple(currentAbstract,  studentInterestCut[interestIndex]) != null){
                intersectionAbstractIDs.add(dictionaryAbstracts.get(currentAbstract));
             }
          }
@@ -258,12 +260,13 @@ public class DataG1{
 
          try{
             // prepared statement
-            String sql = "SELECT facultyID FROM facultyabstract WHERE facultyID = " + intersectionAbstractIDs.pop();
+            String sql = "SELECT facultyID FROM facultyabstract WHERE abstractID = " + intersectionAbstractIDs.pop();
             PreparedStatement ps = conn.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             
             rs.next();
             int newFacultyID = rs.getInt(1);
+            intersectionList.add(newFacultyID);
 
          }// End of try
          catch(SQLException sqle){
@@ -304,7 +307,7 @@ public class DataG1{
          for(int facIndex = 0; facIndex < facultyInterestCut.length; facIndex++){
             
             //Checks if rabinKarp returns anything, if it does then one of the interests exists
-            if(StringSearch.rabinKarpMultiple(studentInterestCut[interestIndex], facultyInterestCut[facIndex] ) != null){
+            if(StringSearch.rabinKarpMultiple( facultyInterestCut[facIndex], studentInterestCut[interestIndex] ) != null){
                int currentAbstractID = dictionaryAbstracts.get(facultyInterestCut[facIndex]);
                if( intersectionList.contains(currentAbstractID))
                intersectionList.add(currentAbstractID);
@@ -312,13 +315,40 @@ public class DataG1{
          }
       }
 
-      
-
-
-
-
-
       return intersectionList;
+   }
+
+
+   LinkedList<String> getFaculty(int facultyID){
+      LinkedList<String> facultyInfo = new LinkedList<>();
+
+      try{
+         // prepared statement
+         String sql1 = "SELECT firstname, lastname, email FROM faculty WHERE facultyID = " + facultyID;
+         PreparedStatement ps1 = conn.prepareStatement(sql1);
+         ResultSet rs1 = ps1.executeQuery();
+         rs1.next();
+         facultyInfo.add(rs1.getString(1) + rs1.getString(2));
+         facultyInfo.add(rs1.getString(3));
+         //add firstname, lastname, email
+
+         String sql2 = "SELECT building, officeNumber FROM facultylocation WHERE facultyID = " + facultyID;
+         PreparedStatement ps2 = conn.prepareStatement(sql2);
+         ResultSet rs2 = ps2.executeQuery();
+         
+         rs2.next();
+         facultyInfo.add(rs2.getString(1));
+         facultyInfo.add(Integer.toString((rs2.getInt(2))));
+         //Add building and officenumber
+
+      }// End of try
+      catch(SQLException sqle){
+         sqle.printStackTrace();
+         System.out.println("TEACHER SEARCH FAILED FOR " + facultyID);
+         return null;
+      }
+
+      return facultyInfo;
    }
 
 
@@ -337,7 +367,6 @@ public class DataG1{
       }// end of catch
    }//end of method close
 
-   
    
    
 } 

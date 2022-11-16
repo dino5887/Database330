@@ -156,11 +156,26 @@ public class PresentationG1 {
                break;
 
             case 5:
-               System.out.println("--- Searching Faculty ---");
+               System.out.println("--- Searching For ALL Faculty Interested ---");
                System.out.println("Enter studentID: ");
                int studentIDf = GetInput.readInt();
                LinkedList<Integer> facultyInterested = dl.getFacultyIntersectionList(studentIDf);
-               System.out.println(facultyInterested);
+               
+               if(!facultyInterested.isEmpty()){
+                  while(!facultyInterested.isEmpty()){
+                     LinkedList<String> faculty = dl.getFaculty(facultyInterested.pop());
+                     System.out.println(" --- Faculty Interested Found --- ");
+                     //System.out.println("Faculty ID: " + facultyInterested + " Faculty List: " + facul );
+                     System.out.println("Faculty Name: " + faculty.pop());
+                     System.out.println("Email: " + faculty.pop());
+                     System.out.println("Building: " + faculty.pop());
+                     System.out.println("Office Number: " + faculty.pop());
+                  }
+
+
+               } else{
+                  System.out.println("No Matches found in the database!");
+               }
                break;
             case 6:
                running = false;
