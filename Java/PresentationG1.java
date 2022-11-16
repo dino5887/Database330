@@ -91,6 +91,39 @@ public class PresentationG1 {
       dl.connect(userName,password,database);
       System.out.println("You have connected to the Group 1 database!");
 
+      boolean running = true;
+      int choice = 0;
+      PresentationG1 present = new PresentationG1(); 
+      while(running){
+         System.out.println("Enter an option");
+         System.out.println("1. Add Faculty");
+         System.out.println("2. Exit\n");
+         System.out.print("Selection: ");
+         choice = GetInput.readInt();
+         switch(choice){
+            case 1:
+               System.out.println("--- Adding a new faculty member ---");
+               System.out.println("Enter last name: ");
+               String lName = GetInput.readLine();
+               System.out.print("Enter First Name: ");
+               String fName = GetInput.readLine();
+               System.out.print("Enter Username: ");
+               String uName = GetInput.readLine();
+               System.out.print("Enter Password: ");
+               String passwd = GetInput.readLine();
+               System.out.print("Enter Email: ");
+               String email = GetInput.readLine();
+
+               int facultyID = dl.addFaculty(lName, fName, uName, passwd, email);
+               //return facultyID;
+               break;
+            case 2:
+               running = false;
+               break;
+            default:
+               System.out.println("Not a valid input.");
+         }
+       }
 
 
 

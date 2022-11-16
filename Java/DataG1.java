@@ -46,6 +46,31 @@ public class DataG1{
       return (conn!=null);
    }
 
+   // Inserts a new faculty member
+   public int addFaculty(String lName, String fName, String uName, String passwd, String email){
+      int result = 0;
+            try{
+               // prepared statement
+               String sql = "INSERT INTO Faculty (lastName, firstName, username, password, email) VALUES (?,?,?,?,?)";
+               PreparedStatement ps = conn.prepareStatement(sql);
+               ps.setString(1, fName);
+               ps.setString(2, lName);
+               ps.setString(3, uName);
+               ps.setString(4, passwd);
+               ps.setString(5, email);
+               
+               result = ps.executeUpdate();
+               String stmt = "SELECT LAST_INSERT_ID()";
+               rs = conn.prepareStatement(stmt).executeQuery();
+               rs.next();
+               return(rs.getInt(1));
+               
+            }// End of try
+            catch(SQLException sqle){
+               sqle.printStackTrace();
+               return -1;
+            }
+    }
 
 //    public LinkedList<Integer> getCandidateChoices(){
 //     LinkedList<Integer> ids = new LinkedList<Integer>();
