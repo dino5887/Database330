@@ -66,7 +66,7 @@ CREATE TABLE FacultyLocation(
 DROP TABLE IF EXISTS FacultyInterests;
 CREATE TABLE FacultyInterests(
     facultyID INT(9) UNSIGNED NOT NULL,
-    keyword VARCHAR(20) NOT NULL,
+    keyword VARCHAR(40) NOT NULL,
     PRIMARY KEY (facultyID, keyword),
     CONSTRAINT facultyInterests_faculty_fk FOREIGN KEY (facultyID) REFERENCES Faculty (facultyID)
 );
@@ -102,7 +102,7 @@ CREATE TABLE StudentMajor(
 DROP TABLE IF EXISTS StudentInterests;
 CREATE TABLE StudentInterests(
     studentID INT(9) UNSIGNED NOT NULL,
-    keyword VARCHAR(20) NOT NULL,
+    keyword VARCHAR(40) NOT NULL,
     PRIMARY KEY (studentID, keyword),
     CONSTRAINT studentInterests_student_fk FOREIGN KEY (studentID) REFERENCES Student (studentID)
 );
