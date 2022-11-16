@@ -93,11 +93,13 @@ public class PresentationG1 {
 
       boolean running = true;
       int choice = 0;
-      PresentationG1 present = new PresentationG1(); 
+      PresentationG1 present = new PresentationG1();
       while(running){
          System.out.println("Enter an option");
          System.out.println("1. Add Faculty");
-         System.out.println("2. Exit\n");
+         System.out.println("2. Delete Faculty");
+         System.out.println("3. Update Faculty");
+         System.out.println("4. Exit\n");
          System.out.print("Selection: ");
          choice = GetInput.readInt();
          switch(choice){
@@ -118,6 +120,15 @@ public class PresentationG1 {
                //return facultyID;
                break;
             case 2:
+               System.out.println("--- Deleting a faculty member ---");
+               System.out.println("Enter faculty ID to delete: ");
+               int updateID = GetInput.readInt(); 
+               dl.deleteFaculty(updateID);
+               break;
+            case 3:
+               System.out.println("Update");
+               break;
+            case 4:
                running = false;
                break;
             default:

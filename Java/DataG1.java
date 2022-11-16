@@ -72,6 +72,40 @@ public class DataG1{
             }
     }
 
+    // Function to delete a faculty
+   public int deleteFaculty(int facultyID){
+      int rows = 0;
+      System.out.println("--- DELETE started ---");
+      try {    
+         // Prepared sql statement   
+         sql =  "DELETE FROM Faculty WHERE facultyID=?";
+         PreparedStatement stmt = conn.prepareStatement(sql);
+      
+         // bind values into the parameters
+         stmt.setInt(1, facultyID);
+      
+         System.out.println("Command to be executed: " + stmt);
+         rows = stmt.executeUpdate();
+         System.out.println("--- DELETE finished ---");
+    
+      }// end of try block
+      catch(SQLException sqle){
+         System.out.println("SQL ERROR");
+         System.out.println("DELETE FAILED!");
+         System.out.println("ERROR MESSAGE: "+sqle);
+         sqle.printStackTrace();
+         return(0);
+      }
+     catch(Exception e) {
+         System.out.println("Error occured in deleteFaculty method");
+         System.out.println("ERROR MESSAGE: "+e);
+         e.printStackTrace();
+         return(0);
+      }
+      return (rows);
+   }// end of deleteFaculty function
+
+
 //    public LinkedList<Integer> getCandidateChoices(){
 //     LinkedList<Integer> ids = new LinkedList<Integer>();
 //     try{
