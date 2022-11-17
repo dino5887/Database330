@@ -101,7 +101,8 @@ public class PresentationG1 {
          System.out.println("3. Update Faculty");
          System.out.println("4. Add Student");
          System.out.println("5. Search Faculty Interests");
-         System.out.println("6. Exit\n");
+         System.out.println("6. Add Faculty Abstract");
+         System.out.println("7. Exit\n");
          System.out.print("Selection: ");
          choice = GetInput.readInt();
          switch(choice){
@@ -121,8 +122,20 @@ public class PresentationG1 {
                String passwd = GetInput.readLine();
                System.out.print("Enter Email: ");
                String email = GetInput.readLine();
-
-               dl.addFaculty(facultyID, departmentID, lName, fName, uName, passwd, email);
+               System.out.print("Enter Building: ");
+               String building = GetInput.readLine();
+               System.out.print("Enter Office: ");
+               int office = GetInput.readInt();
+               System.out.print("Input 0 for none, 1 for Interest");
+               int swotch = GetInput.readInt();
+               if(swotch == 0){
+                  dl.addFaculty(facultyID, departmentID, lName, fName, uName, passwd, email, building, office, "none");
+               }
+               if(swotch == 1){
+                  System.out.print("Interest: ");
+                  String Interest = GetInput.readLine();
+                  dl.addFaculty(facultyID, departmentID, lName, fName, uName, passwd, email, building, office, Interest);
+               }
                break;
             case 2:
                System.out.println("--- Deleting a faculty member ---");
@@ -164,12 +177,14 @@ public class PresentationG1 {
                if(!facultyInterested.isEmpty()){
                   while(!facultyInterested.isEmpty()){
                      LinkedList<String> faculty = dl.getFaculty(facultyInterested.pop());
-                     System.out.println(" --- Faculty Interested Found --- ");
-                     //System.out.println("Faculty ID: " + facultyInterested + " Faculty List: " + facul );
-                     System.out.println("Faculty Name: " + faculty.pop());
-                     System.out.println("Email: " + faculty.pop());
-                     System.out.println("Building: " + faculty.pop());
-                     System.out.println("Office Number: " + faculty.pop());
+                        while(!faculty.isEmpty()){
+                        System.out.println(" --- Faculty Interested Found --- ");
+                        //System.out.println("Faculty ID: " + facultyInterested + " Faculty List: " + facul );
+                        System.out.println("Faculty Name: " + faculty.pop());
+                        System.out.println("Email: " + faculty.pop());
+                        System.out.println("Building: " + faculty.pop());
+                        System.out.println("Office Number: " + faculty.pop() + "\n");
+                        }
                   }
 
 
@@ -178,6 +193,19 @@ public class PresentationG1 {
                }
                break;
             case 6:
+            System.out.println("--- Adding a new Student ---");
+            System.out.println("Enter facultyID: ");
+            int facultyID2 = GetInput.readInt();
+            System.out.println("Enter Abstract Title: ");
+            String abstractTitle = GetInput.readLine();
+            System.out.println("Enter Abstract Content: ");
+            String abstractInput = GetInput.readLine();
+
+
+            dl.addAbstractInterest(facultyID2, abstractTitle, abstractInput);
+            break;
+               
+            case 7:
                running = false;
                break;
             default:

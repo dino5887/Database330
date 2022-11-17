@@ -50,7 +50,7 @@ public class DataG1{
    }
 
    // Inserts a new faculty member
-   public int addFaculty(int facultyID, int departmentID, String lName, String fName, String uName, String passwd, String email){
+   public int addFaculty(int facultyID, int departmentID, String lName, String fName, String uName, String passwd, String email, String building , int office, String interests){
       int result = 0;
             try{
                // prepared statement
@@ -64,18 +64,110 @@ public class DataG1{
                ps.setString(6, passwd);
                ps.setString(7, email);
                
+               
                result = ps.executeUpdate();
                String stmt = "SELECT LAST_INSERT_ID()";
                rs = conn.prepareStatement(stmt).executeQuery();
                rs.next();
-               return(rs.getInt(1));
+
+               addFacultyLocation(facultyID, building, office);
+
+               if(interests!="none"){
+                  addFacultyInterest(facultyID, interests);
+               }
                
+
+
+               return(rs.getInt(1));
+
+
+
+
             }// End of try
             catch(SQLException sqle){
                sqle.printStackTrace();
                return -1;
             }
     }
+
+    public int addFacultyLocation(int facultyID, String building, int office ){
+      int result = 0;
+         try{
+            // prepared statement
+            String sql = "INSERT INTO facultyinterests (facultyID, building, office) VALUES (?, ?, ?)";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, facultyID);
+            ps.setString(2, building);
+            ps.setInt(3, office);
+            result = ps.executeUpdate();
+            return(result);
+            
+         }// End of try
+         catch(SQLException sqle){
+            sqle.printStackTrace();
+            return -1;
+         }
+     }
+
+    public int addFacultyInterest(int facultyID, String FacInterest){
+      int result = 0;
+         try{
+            // prepared statement
+            String sql = "INSERT INTO facultyinterests (facultyID, keyword) VALUES (?, ?)";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, facultyID);
+            ps.setString(2, FacInterest);
+            result = ps.executeUpdate();
+            return(result);
+            
+         }// End of try
+         catch(SQLException sqle){
+            sqle.printStackTrace();
+            return -1;
+         }
+     }
+
+    public int addAbstractInterest(int facultyID, String abstractTitle, String abstractInput){
+      int result = 0;
+         try{
+            // prepared statement
+            String sql1 = "INSERT INTO abstract (abstracttitle, abstract) VALUES (?, ?)";
+            PreparedStatement ps1 = conn.prepareStatement(sql1);
+            ps1.setString(1, abstractTitle);
+            ps1.setString(2, abstractInput);
+            result = ps1.executeUpdate();
+            if(result == 0){
+               System.out.println("INSERT INTO ABSTRACT FAILED TERMINATING CODE");
+               return 1;
+            }
+            
+            String sql2 = "SELECT LAST_INSERT_ID()";
+            PreparedStatement ps2 = conn.prepareStatement(sql2);
+            ResultSet resultSet = ps2.executeQuery();
+
+            resultSet.next();
+            int abstractID = resultSet.getInt(1);
+            
+            String sql3 = "INSERT INTO facultyabstract (facultyID, abstractID) VALUES (?, ?)";
+            PreparedStatement ps3 = conn.prepareStatement(sql3);
+            ps3.setInt(1, facultyID);
+            ps3.setInt(2, abstractID);
+            int result3 = ps3.executeUpdate();
+            if(result3 == 0){
+               System.out.println("INSERT INTO FACULTYABSTRACT FAILED TERMINATING CODE" + abstractID);
+               return 1;
+            }
+            
+            return(result);
+         }// End of try
+         catch(SQLException sqle){
+            sqle.printStackTrace();
+            return -1;
+         }
+     }
+
+
+
 
     // Function to delete a faculty
    public int deleteFaculty(int facultyID){
@@ -240,10 +332,11 @@ public class DataG1{
       }
 
       //Uses my Rabin-Karp code to searh all the abstracts for all the keywords
-      for(int interestIndex = 0; interestIndex < studentInterestCut.length - 1; interestIndex++ ){
+      for(int interestIndex = 0; interestIndex < studentInterestCut.length; interestIndex++ ){
 
 
          while(!facultyAbstractList.isEmpty()){
+            System.out.println("HIIIIII");
             String currentAbstract = facultyAbstractList.pop();
             //Removes an abstract from the list until it is empty
 
@@ -328,7 +421,7 @@ public class DataG1{
          PreparedStatement ps1 = conn.prepareStatement(sql1);
          ResultSet rs1 = ps1.executeQuery();
          rs1.next();
-         facultyInfo.add(rs1.getString(1) + rs1.getString(2));
+         facultyInfo.add(rs1.getString(1) + " " + rs1.getString(2));
          facultyInfo.add(rs1.getString(3));
          //add firstname, lastname, email
 
@@ -351,10 +444,6 @@ public class DataG1{
       return facultyInfo;
    }
 
-
-
-
-      
    
    public void close(){
       try {
