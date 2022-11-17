@@ -162,7 +162,7 @@ public class PresentationG1 {
                String semail = GetInput.readLine();
                System.out.print("Enter String of student intersts \n MUST have comamas(,) seperating intersts \"science,tech\" : ");
                String sinterest = GetInput.readLine();
-               System.out.println("The Major Number Choices are:");
+               System.out.println("The Major Number Choices are: 1000, 1002, 1004, 1006, 1008, 1010, 1012, 1014, 1016, 1018, 2000, 2002, 2004, 2006, 2008, 3000, 3002, 3004, 3006, 3008, 3010");
                System.out.print("Enter Major: ");
                int smajor = GetInput.readInt();
                dl.addStudent(studentID, slName, sfName, suName, spasswd, semail, sinterest, smajor);
