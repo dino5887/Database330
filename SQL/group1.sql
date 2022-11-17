@@ -158,6 +158,9 @@ CREATE TABLE Student(
     PRIMARY KEY (studentID)
 );
 
+INSERT INTO Student VALUES (111222333, "Becker", "Brenden", "bbecker", "123", "bpb2145@rit.edu"), (222333444, "Castiglione", "Sophia", "scastiglione", "234", "src8776@rit.edu"), 
+(333444555, "Ross", "Hunter", "hross", "345", "hgr9727@.rit.edu");
+
 DROP TABLE IF EXISTS Major;
 CREATE TABLE Major(
     majorID INT(4) UNSIGNED NOT NULL,
@@ -180,6 +183,8 @@ CREATE TABLE StudentMajor(
     CONSTRAINT studentMajor_major_fk FOREIGN KEY (majorID) REFERENCES Major (majorID)
 );
 
+INSERT INTO StudentMajor VALUES (111222333, 1018), (222333444, 1018), (333444555, 1002);
+
 DROP TABLE IF EXISTS StudentInterests;
 CREATE TABLE StudentInterests(
     studentID INT(9) UNSIGNED NOT NULL,
@@ -187,5 +192,7 @@ CREATE TABLE StudentInterests(
     PRIMARY KEY (studentID, keyword),
     CONSTRAINT studentInterests_student_fk FOREIGN KEY (studentID) REFERENCES Student (studentID)
 );
+
+INSERT INTO StudentInterests VALUES (111222333, "Chemistry"), (222333444, "Data"), (333444555, "Game Design");
 
 -- STUDENT TABLES END
