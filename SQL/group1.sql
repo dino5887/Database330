@@ -120,11 +120,17 @@ INSERT INTO FacultyAbstract VALUES (112023489, 1), (112023489, 2), (220111345, 3
 DROP TABLE IF EXISTS FacultyLocation;
 CREATE TABLE FacultyLocation(
     facultyID INT(9) UNSIGNED NOT NULL,
-    building VARCHAR(45) NOT NULL,
+    building VARCHAR(60) NOT NULL,
     officeNumber INT(4) UNSIGNED NOT NULL,
     PRIMARY KEY (facultyID),
     CONSTRAINT facultyLocation_faculty_fk FOREIGN KEY (facultyID) REFERENCES Faculty (facultyID)
 );
+
+INSERT INTO FacultyLocation VALUES (100023456, "Golisano Hall", 2673), (110122300, "Golisano Hall", 2111), (111789000, "Golisano Hall", 2331), 
+(112023489, "Golisano Hall", 2621), (122098777, "Golisano Hall", 2281), (220111345, "Golisano Hall", 2608), (232002892, "Golisano Hall", 1559), 
+(251000123, "Golisano Hall", 1557), (322045987, "Thomas Gosnell Hall", 3260), (327723237, "Thomas Gosnell Hall", 3272), (334555500, "Thomas Gosnell Hall", 2290), 
+(350012300, "Thomas Gosnell Hall", 1266), (400444000, "Institute Hall", 3107), (401234567, "Institute Hall", 4109), (429845600, "Engineering Hall", 2195), 
+(435998760, "James E. Gleason Hall", 2171);
 
 DROP TABLE IF EXISTS FacultyInterests;
 CREATE TABLE FacultyInterests(
