@@ -336,7 +336,6 @@ public class DataG1{
 
 
          while(!facultyAbstractList.isEmpty()){
-            System.out.println("HIIIIII");
             String currentAbstract = facultyAbstractList.pop();
             //Removes an abstract from the list until it is empty
 
