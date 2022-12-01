@@ -443,6 +443,80 @@ public class DataG1{
       return facultyInfo;
    }
 
+
+   public LinkedList<Integer> getStudentsInterested(String studentInterestSearchUncut){
+      //Brenden Search for Students Code
+      LinkedList<Integer> intersectionStudentIDs = new LinkedList<>();
+      //Iterates through the rows of students to search for intersections between their interests and the inputed keywords
+      
+      studentInterestSearchUncut = studentInterestSearchUncut.strip();
+      studentInterestSearchUncut = studentInterestSearchUncut.toLowerCase();
+      String[] studentInterestSearchCut = studentInterestSearchUncut.split(",");
+
+      String studentInterestString;
+      LinkedList<String> studentInterestsList = new LinkedList<>();   
+      //Get all Interests from students
+            try{
+         // prepared statement
+         String sql = "SELECT studentID, keyword FROM student INNER JOIN studentinterests USING(studentID)";
+         PreparedStatement ps = conn.prepareStatement(sql);
+         ResultSet rs = ps.executeQuery();
+         rs.next();
+         do {
+         int studentID = rs.getInt(1);
+         studentInterestString= rs.getString(2);
+         studentInterestString = studentInterestString.toLowerCase();
+
+         //Adds the student ID to the list if it contains a keyword
+         for(int interestIndex = 0; interestIndex < studentInterestSearchCut.length; interestIndex++){
+            if(StringSearch.rabinKarpMultiple(studentInterestString, studentInterestSearchCut[interestIndex]) != null && !intersectionStudentIDs.contains(studentID)){
+               intersectionStudentIDs.add(studentID);
+            }
+         }
+
+         } while(rs.next());
+         //System.out.println("TESTING CODE Abstract is: " + FacultyAbstractString);
+      }// End of try
+      catch(SQLException sqle){
+         sqle.printStackTrace();
+         System.out.println("STUDENT INTEREST GET FAILED!!!");
+         return null;
+      }
+
+      return intersectionStudentIDs;
+   }
+
+   LinkedList<String> getStudent(int studentID){
+      LinkedList<String> facultyInfo = new LinkedList<>();
+
+      try{
+         // prepared statement
+         String sql1 = "SELECT firstname, lastname, email, studentID, keyword FROM student INNER JOIN studentinterests USING(studentID) WHERE studentID = " + studentID;
+         PreparedStatement ps1 = conn.prepareStatement(sql1);
+         ResultSet rs1 = ps1.executeQuery();
+         rs1.next();
+         facultyInfo.add(rs1.getString(1) + " " + rs1.getString(2));
+         facultyInfo.add(rs1.getString(3));
+         facultyInfo.add(Integer.toString(studentID));
+         facultyInfo.add(rs1.getString(4));
+         //add firstname lastname, email, studentID, keywords
+
+         //Add building and officenumber
+
+      }// End of try
+      catch(SQLException sqle){
+         sqle.printStackTrace();
+         System.out.println("TEACHER SEARCH FAILED FOR " + studentID);
+         return null;
+      }
+
+      return facultyInfo;
+   }
+
+
+
+
+
    
    public void close(){
       try {

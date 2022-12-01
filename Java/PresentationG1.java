@@ -102,7 +102,8 @@ public class PresentationG1 {
          System.out.println("4. Add Student");
          System.out.println("5. Search Faculty Interests");
          System.out.println("6. Add Faculty Abstract");
-         System.out.println("7. Exit\n");
+         System.out.println("7. Search Student Interests");
+         System.out.println("8. Exit\n");
          System.out.print("Selection: ");
          choice = GetInput.readInt();
          switch(choice){
@@ -204,8 +205,32 @@ public class PresentationG1 {
 
             dl.addAbstractInterest(facultyID2, abstractTitle, abstractInput);
             break;
-               
+
             case 7:
+            System.out.println("--- Searching For ALL Students Interested ---");
+               System.out.println("Enter A List of Key Topics Seperated by ',': ");
+               String topicInput = GetInput.readLine();
+               LinkedList<Integer> studentsInterested = dl.getStudentsInterested(topicInput);
+               
+               if(!studentsInterested.isEmpty()){
+                  while(!studentsInterested.isEmpty()){
+                     LinkedList<String> gotStudent = dl.getStudent(studentsInterested.pop());
+                        while(!gotStudent.isEmpty()){
+                        System.out.println(" --- Student Interested Found --- ");
+                        System.out.println("Student Name: " + gotStudent.pop());
+                        System.out.println("Email: " + gotStudent.pop());
+                        System.out.println("STudent ID: " + gotStudent.pop());
+                        System.out.println("Student Interests: " + gotStudent.pop() + "\n");
+                        }
+                  }
+
+
+               } else{
+                  System.out.println("No Matches found in the database!");
+               }
+               break;
+               
+            case 8:
                running = false;
                break;
             default:
@@ -218,7 +243,6 @@ public class PresentationG1 {
    } 
 
    public static void main(String [] args){
-    PresentationG1 present = new PresentationG1(); 
-
+      PresentationG1 present = new PresentationG1(); 
    } 
 } 
