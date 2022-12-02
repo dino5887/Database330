@@ -4,6 +4,7 @@
 
 // This code is the Data Layer
 import java.sql.*;
+import java.util.Arrays;
 import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.Hashtable;
@@ -371,14 +372,25 @@ public class DataG1{
 
 
       //This code takes interests from the faculty interest table and adds them to the output if they are new
+      LinkedList<String[]> facultyInterested = new LinkedList<String[]>();
       String facultyInterestUncut;
       try{
          // prepared statement
          String sql = "SELECT keyword FROM facultyinterests";
          PreparedStatement ps = conn.prepareStatement(sql);
          ResultSet rs = ps.executeQuery();
-         rs.next();
-         facultyInterestUncut = rs.getString(1);
+         while(rs.next()){
+            facultyInterestUncut = rs.getString(1);
+            // if(facultyInterestUncut != null){
+            //    System.out.println(facultyInterestUncut);
+            // }
+            //Now tokenize the studentIntests into individual interests
+            facultyInterestUncut = facultyInterestUncut.strip();
+            facultyInterestUncut = facultyInterestUncut.toLowerCase();
+            String[] facultyInterestCut = facultyInterestUncut.split(",");
+            facultyInterested.add(facultyInterestCut);
+            //System.out.println("ADDING STUFF");
+         }
          //System.out.println("TESTING CODE student Interest is: " + studentInterestUncut);
       }// End of try
       catch(SQLException sqle){
@@ -387,22 +399,53 @@ public class DataG1{
          return null;
       }
 
-      //Now tokenize the studentIntests into individual interests
-      facultyInterestUncut = facultyInterestUncut.strip();
-      facultyInterestUncut = facultyInterestUncut.toLowerCase();
-      String[] facultyInterestCut = facultyInterestUncut.split(",");
+      LinkedList<String> facultyConfirmedInterests = new LinkedList<String>();
+
+      System.out.println(Arrays.toString(studentInterestCut));
+      for(int interestIndex = 0; interestIndex <= studentInterestCut.length - 1; interestIndex++ ){
+         //Loops through all of the student's interests
 
 
-      for(int interestIndex = 0; interestIndex < studentInterestCut.length - 1; interestIndex++ ){
+         for(int facultyIndex = 0; facultyIndex <= facultyInterested.size() - 1; facultyIndex++){
+            //Loops through all of the faculty
+            String[] facultyInterestCutCurrent = facultyInterested.get(facultyIndex);
 
-         
-         for(int facIndex = 0; facIndex < facultyInterestCut.length; facIndex++){
-            
-            //Checks if rabinKarp returns anything, if it does then one of the interests exists
-            if(StringSearch.rabinKarpMultiple( facultyInterestCut[facIndex], studentInterestCut[interestIndex] ) != null){
-               int currentAbstractID = dictionaryAbstracts.get(facultyInterestCut[facIndex]);
-               if( intersectionList.contains(currentAbstractID))
-               intersectionList.add(currentAbstractID);
+            //System.out.println("NO TRIGGER ON " + facultyInterestCutCurrent[facultyIndex] + "    |    " + studentInterestCut[interestIndex]);
+            for(int facInterestIndex = 0; facInterestIndex <= facultyInterestCutCurrent.length - 1; facInterestIndex++){
+               //Loops through the faculty interests 
+
+               //System.out.println("HI");
+               //System.out.println("NO TRIGGER FOR " + facultyInterestCutCurrent[facInterestIndex] + "    |    " + studentInterestCut[interestIndex]);
+               //Checks if rabinKarp returns anything, if it does then one of the interests exists
+               if(StringSearch.rabinKarpMultiple(facultyInterestCutCurrent[facInterestIndex], studentInterestCut[interestIndex] ) != null){
+                 //System.out.println("TRIGGER ON " + facultyInterestCutCurrent[facInterestIndex] + "    |    "+ studentInterestCut[interestIndex]);
+                  int currentAbstractID;
+                  //gets the faculty ID because I never linked them up, probably ineffiecent but I wasn't going to go back and reconfigure to interate over a dictionary right now
+                  try{
+                     // prepared statement
+                     String sql = "SELECT facultyID FROM facultyinterests WHERE keyword = '" + facultyInterestCutCurrent[facInterestIndex] + "'";
+                     PreparedStatement ps = conn.prepareStatement(sql);
+                     ResultSet rs = ps.executeQuery();
+                     rs.next();
+                     currentAbstractID = rs.getInt(1);
+                        // if(facultyInterestUncut != null){
+                        //    System.out.println(facultyInterestUncut);
+                        // }
+                        //Now tokenize the studentIntests into individual interests
+                        
+                        //System.out.println("ADDING STUFF");
+                     //System.out.println("TESTING CODE student Interest is: " + studentInterestUncut);
+                  }// End of try
+                  catch(SQLException sqle){
+                     sqle.printStackTrace();
+                     System.out.println("GET FACULTY INTEREST ID FAILED");
+                     return null;
+                  }
+
+
+                  if(!intersectionList.contains(currentAbstractID))
+                  intersectionList.add(currentAbstractID);
+               }
             }
          }
       }

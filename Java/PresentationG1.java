@@ -256,7 +256,7 @@ public class PresentationG1 {
                System.out.println("Update");
                break;
             case 4:
-               JPanel newStudentMenu = new JPanel(new GridLayout(9,2));
+               JPanel newStudentMenu = new JPanel(new GridLayout(8,2));
                
          	   JLabel lblStuID = new JLabel("Enter StudentID: ");
                JLabel lblSLName = new JLabel("Enter Last Name: ");
@@ -265,9 +265,9 @@ public class PresentationG1 {
                JLabel lblSPasswd = new JLabel("Enter Password: ");
                JLabel lblSEmail = new JLabel("Enter Email: ");
                JLabel lblSInterest = new JLabel("Enter String of student intersts. MUST have comamas(,) seperating intersts \"science,tech\" :  ");
-               JLabel lblSMajorNum = new JLabel("The Major Number Choices are: 1000, 1002, 1004, 1006, 1008, 1010, 1012, 1014, 1016, 1018, 2000, 2002, 2004, 2006, 2008, 3000, 3002, 3004, 3006, 3008, 3010");
+               //JLabel lblSMajorNum = new JLabel("The Major Number Choices are: 1000, 1002, 1004, 1006, 1008, 1010, 1012, 1014, 1016, 1018, 2000, 2002, 2004, 2006, 2008, 3000, 3002, 3004, 3006, 3008, 3010");
                JLabel lblSMajor = new JLabel("Enter Major: ");
-               JLabel lblempty = new JLabel("");
+               //JLabel lblempty = new JLabel("");
                
                JTextField tfStuID = new JTextField("");
                JTextField tfSLName = new JTextField("");
@@ -292,8 +292,8 @@ public class PresentationG1 {
                newStudentMenu.add(tfSEmail);
                newStudentMenu.add(lblSInterest);
                newStudentMenu.add(tfSInterest);
-               newStudentMenu.add(lblSMajorNum);
-               newStudentMenu.add(lblempty);
+               //newStudentMenu.add(lblSMajorNum);
+               //newStudentMenu.add(lblempty);
                newStudentMenu.add(lblSMajor);
                newStudentMenu.add(tfSMajor);
                
@@ -308,7 +308,7 @@ public class PresentationG1 {
                String semail = tfSEmail.getText();
                String sinterest = tfSInterest.getText();
                String stuMajorInput = tfSMajor.getText();
-               int smajor = Integer.parseInt(stuIDInput);
+               int smajor = Integer.parseInt(stuMajorInput);
             
                /*System.out.println("--- Adding a new Student ---");
                System.out.println("Enter studentID: ");
@@ -404,7 +404,7 @@ public class PresentationG1 {
                String abstractTitle = tfATitle.getText();
                String abstractInput = tfAcontent.getText();
             
-               JOptionPane.showMessageDialog(null, addAbstractMenu, "Faculty Interst Found.", JOptionPane.QUESTION_MESSAGE);
+               JOptionPane.showMessageDialog(null, addAbstractMenu, "Faculty Abstract Found.", JOptionPane.QUESTION_MESSAGE);
             
             /*System.out.println("--- Adding a new Student ---");
             System.out.println("Enter facultyID: ");
