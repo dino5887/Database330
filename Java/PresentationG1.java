@@ -308,7 +308,7 @@ public class PresentationG1 {
                String semail = tfSEmail.getText();
                String sinterest = tfSInterest.getText();
                String stuMajorInput = tfSMajor.getText();
-               int smajor = Integer.parseInt(stuIDInput);
+               int smajor = Integer.parseInt(stuMajorInput);
             
                /*System.out.println("--- Adding a new Student ---");
                System.out.println("Enter studentID: ");
@@ -404,7 +404,7 @@ public class PresentationG1 {
                String abstractTitle = tfATitle.getText();
                String abstractInput = tfAcontent.getText();
             
-               JOptionPane.showMessageDialog(null, addAbstractMenu, "Faculty Interst Found.", JOptionPane.QUESTION_MESSAGE);
+               JOptionPane.showMessageDialog(null, addAbstractMenu, "Faculty Abstract Found.", JOptionPane.QUESTION_MESSAGE);
             
             /*System.out.println("--- Adding a new Student ---");
             System.out.println("Enter facultyID: ");
