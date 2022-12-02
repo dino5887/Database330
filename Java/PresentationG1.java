@@ -9,6 +9,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;  
 
+import java.math.BigInteger;
+import java.security.MessageDigest;
+
 public class PresentationG1 {
 
    DataG1 dl = new DataG1();
@@ -195,6 +198,7 @@ public class PresentationG1 {
               String fName = tfFName.getText();
               String uName = tfUName.getText();
               String passwd = tfPasswd.getText();
+              String passwdEC = encrypt(passwd);
               String email = tfEmail.getText();
               String building = tfBuilding.getText();
               String officeInput = tfOffice.getText();
@@ -225,12 +229,12 @@ public class PresentationG1 {
                int swotch = GetInput.readInt();*/
                
                if(swotch == 0){
-                  dl.addFaculty(facultyID, departmentID, lName, fName, uName, passwd, email, building, office, "none");
+                  dl.addFaculty(facultyID, departmentID, lName, fName, uName, passwdEC, email, building, office, "none");
                }
                if(swotch == 1){
                   System.out.print("Interest: ");
                   String Interest = GetInput.readLine();
-                  dl.addFaculty(facultyID, departmentID, lName, fName, uName, passwd, email, building, office, Interest);
+                  dl.addFaculty(facultyID, departmentID, lName, fName, uName, passwdEC, email, building, office, Interest);
                }
                break;
             case 2:
@@ -498,4 +502,20 @@ public class PresentationG1 {
    public static void main(String [] args){
       PresentationG1 present = new PresentationG1(); 
    } 
+
+   public static String encrypt(String secret){
+      String sha1 = "";
+      String value = new String(secret);
+      try {
+          MessageDigest digest = MessageDigest.getInstance("SHA-1");
+        digest.reset();
+        digest.update(value.getBytes("utf8"));
+        sha1 = String.format("%040x", new BigInteger(1, digest.digest()));
+      } 
+      catch (Exception e){
+          e.printStackTrace();
+      }// end of catch
+
+      return sha1;
+   }//end of encrypt
 } 
