@@ -382,39 +382,99 @@ public class PresentationG1 {
                }
                break;
             case 6:
-            System.out.println("--- Adding a new Student ---");
+               JPanel addAbstractMenu = new JPanel(new GridLayout(3,1));
+               
+         	   JLabel lblAFacID = new JLabel("Enter facultyID: ");
+               JLabel lblATitle = new JLabel("Enter Abstract Title: ");
+               JLabel lblAcontent = new JLabel("Enter Abstract Content: ");
+               
+               JTextField tfAFacID = new JTextField("");
+               JTextField tfATitle = new JTextField("");
+               JTextField tfAcontent = new JTextField("");
+               
+               addAbstractMenu.add(lblAFacID);
+               addAbstractMenu.add(tfAFacID);
+               addAbstractMenu.add(lblATitle);
+               addAbstractMenu.add(tfATitle);
+               addAbstractMenu.add(lblAcontent);
+               addAbstractMenu.add(tfAcontent);
+               
+               String facultyID2Input = tfAFacID.getText();
+               int facultyID2 = Integer.parseInt(facultyID2Input);
+               String abstractTitle = tfATitle.getText();
+               String abstractInput = tfAcontent.getText();
+            
+               JOptionPane.showMessageDialog(null, addAbstractMenu, "Faculty Interst Found.", JOptionPane.QUESTION_MESSAGE);
+            
+            /*System.out.println("--- Adding a new Student ---");
             System.out.println("Enter facultyID: ");
             int facultyID2 = GetInput.readInt();
             System.out.println("Enter Abstract Title: ");
             String abstractTitle = GetInput.readLine();
             System.out.println("Enter Abstract Content: ");
-            String abstractInput = GetInput.readLine();
+            String abstractInput = GetInput.readLine();*/
 
 
-            dl.addAbstractInterest(facultyID2, abstractTitle, abstractInput);
-            break;
+               dl.addAbstractInterest(facultyID2, abstractTitle, abstractInput);
+               break;
 
             case 7:
-            System.out.println("--- Searching For ALL Students Interested ---");
+            
+               JPanel searchFacIntrestMenu = new JPanel(new GridLayout(1,2));
+         	   JLabel lblTopics = new JLabel("Enter A List of Key Topics Seperated by ',': ");
+               JTextField tfTopics = new JTextField("");
+               
+               searchFacIntrestMenu.add(lblTopics);
+               searchFacIntrestMenu.add(tfTopics);
+               
+               JOptionPane.showMessageDialog(null, searchFacIntrestMenu, "Searching for ALL Students Interested.", JOptionPane.QUESTION_MESSAGE);
+               
+               String topicInput = tfTopics.getText();
+
+               /*System.out.println("--- Searching For ALL Students Interested ---");
                System.out.println("Enter A List of Key Topics Seperated by ',': ");
-               String topicInput = GetInput.readLine();
+               String topicInput = GetInput.readLine();*/
+               
                LinkedList<Integer> studentsInterested = dl.getStudentsInterested(topicInput);
                
                if(!studentsInterested.isEmpty()){
                   while(!studentsInterested.isEmpty()){
                      LinkedList<String> gotStudent = dl.getStudent(studentsInterested.pop());
                         while(!gotStudent.isEmpty()){
-                        System.out.println(" --- Student Interested Found --- ");
+                        
+                        JPanel jstudentsInterested = new JPanel(new GridLayout(4,1));
+                        
+                        JLabel lblStuName1 = new JLabel("Student Name: " + gotStudent.pop());
+                        JLabel lblStuEmail1 = new JLabel("Email: " + gotStudent.pop());
+                        JLabel lblStuID1 = new JLabel("Student ID: " + gotStudent.pop());
+                        JLabel lblStuInterest1 = new JLabel("Student Interests: " + gotStudent.pop());
+                        
+                        jstudentsInterested.add(lblStuName1);
+                        jstudentsInterested.add(lblStuEmail1);
+                        jstudentsInterested.add(lblStuID1);
+                        jstudentsInterested.add(lblStuInterest1);
+
+                        JOptionPane.showMessageDialog(null, jstudentsInterested, "Students Intersted.", JOptionPane.WARNING_MESSAGE);
+                       
+                        /*System.out.println(" --- Student Interested Found --- ");
                         System.out.println("Student Name: " + gotStudent.pop());
                         System.out.println("Email: " + gotStudent.pop());
                         System.out.println("STudent ID: " + gotStudent.pop());
-                        System.out.println("Student Interests: " + gotStudent.pop() + "\n");
+                        System.out.println("Student Interests: " + gotStudent.pop() + "\n");*/
+                        
                         }
                   }
 
 
                } else{
-                  System.out.println("No Matches found in the database!");
+                  JPanel noStudentsInterested = new JPanel(new GridLayout(1,1));
+                  JLabel lblNoMatch = new JLabel("No Mathces found in the database!!");
+                  noStudentsInterested.add(lblNoMatch);
+                  JOptionPane.showMessageDialog(null, noStudentsInterested, "No Students Found.", JOptionPane.WARNING_MESSAGE);
+                  
+
+               
+                  //System.out.println("No Matches found in the database!");
                }
                break;
                
@@ -422,7 +482,12 @@ public class PresentationG1 {
                running = false;
                break;
             default:
-               System.out.println("Not a valid input.");
+               JPanel jInvalidInput = new JPanel(new GridLayout(1,1));
+               JLabel lblInvalid = new JLabel("Not a valid input.");
+               jInvalidInput.add(lblInvalid);
+               JOptionPane.showMessageDialog(null, jInvalidInput, "Invalid input.", JOptionPane.WARNING_MESSAGE);
+               
+               //System.out.println("Not a valid input.");
          }
        }
 
