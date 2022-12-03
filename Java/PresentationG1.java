@@ -403,12 +403,14 @@ public class PresentationG1 {
                addAbstractMenu.add(lblAcontent);
                addAbstractMenu.add(tfAcontent);
                
+               JOptionPane.showMessageDialog(null, addAbstractMenu, "Faculty Abstract Found.", JOptionPane.QUESTION_MESSAGE);
+               
                String facultyID2Input = tfAFacID.getText();
                int facultyID2 = Integer.parseInt(facultyID2Input);
                String abstractTitle = tfATitle.getText();
                String abstractInput = tfAcontent.getText();
             
-               JOptionPane.showMessageDialog(null, addAbstractMenu, "Faculty Abstract Found.", JOptionPane.QUESTION_MESSAGE);
+               
             
             /*System.out.println("--- Adding a new Student ---");
             System.out.println("Enter facultyID: ");
