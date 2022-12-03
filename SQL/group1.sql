@@ -32,14 +32,14 @@ CREATE TABLE Faculty(
     CONSTRAINT faculty_departments_fk FOREIGN KEY (departmentID) REFERENCES Departments (departmentID)
 );
 
-INSERT INTO Faculty VALUES (100023456, 2010, "Habermas", "Jim", "jhabermas", "apple", "jim.habermas@rit.edu"), (110122300, 2010, "Bogaard", "Dan", "dbogaard", "orange", "dan.bogaard@rit.edu"),
-(111789000, 2010, "Hill", "Lawrence", "lhill", "pear", "lwhfac@rit.edu"), (112023489, 2010, "Beaton", "Catherine", "cbeaton", "strawberry", "ciiics@rit.edu"), 
-(122098777, 2010, "Patric", "Dave", "dpatric", "grape", "dkpvcs@rit.edu"), (220111345, 2015, "Bayliss", "Jessica", "jbayliss", "blueberry", "jdbics@rit.edu"), 
-(232002892, 2020, "Desell", "Travis", "dtravis", "banana", "tjdvse@rit.edu"), (251000123, 2020, "Kiser", "Larry", "lkiser", "watermelon", "llkiee@rit.edu"), 
-(322045987, 3000, "Bailey", "Alla", "abailey", "pineapple", "avbsch@rit.edu"), (327723237, 3000, "Cody", "Jeremy", "jcody", "peach", "jacsch@rit.edu"), 
-(334555500, 3000, "Gleghorn", "Michael", "mgleghorn", "raspberry", "mlgsch@rit.edu"), (350012300, 3010, "Connelly", "Sandi", "sconnelly", "lemon", "sjcsbi@rit.edu"), 
-(400444000, 4000, "Day", "Steven", "sday", "lime", "steven.day@rit.edu"), (401234567, 4000, "Gaborski", "Tom", "tgaborski", "mango", "trgbme@rit.edu"), 
-(429845600, 4005, "Borkholder", "David", "dborkholder", "coconut", "david.borkholder@rit.edu"), (435998760, 4010, "Fly", "Gerald", "gfly", "kiwi", "gwfeme@rit.edu");
+INSERT INTO Faculty VALUES (100023456, 2010, "Habermas", "Jim", "jhabermas", "1b4c73d6169f4403ad70bf00ceb982558973f019", "jim.habermas@rit.edu"), (110122300, 2010, "Bogaard", "Dan", "dbogaard", "1b4c73d6169f4403ad70bf00ceb982558973f019", "dan.bogaard@rit.edu"),
+(111789000, 2010, "Hill", "Lawrence", "lhill", "1b4c73d6169f4403ad70bf00ceb982558973f019", "lwhfac@rit.edu"), (112023489, 2010, "Beaton", "Catherine", "cbeaton", "1b4c73d6169f4403ad70bf00ceb982558973f019", "ciiics@rit.edu"), 
+(122098777, 2010, "Patric", "Dave", "dpatric", "1b4c73d6169f4403ad70bf00ceb982558973f019", "dkpvcs@rit.edu"), (220111345, 2015, "Bayliss", "Jessica", "jbayliss", "1b4c73d6169f4403ad70bf00ceb982558973f019", "jdbics@rit.edu"), 
+(232002892, 2020, "Desell", "Travis", "dtravis", "1b4c73d6169f4403ad70bf00ceb982558973f019", "tjdvse@rit.edu"), (251000123, 2020, "Kiser", "Larry", "lkiser", "1b4c73d6169f4403ad70bf00ceb982558973f019", "llkiee@rit.edu"), 
+(322045987, 3000, "Bailey", "Alla", "abailey", "1b4c73d6169f4403ad70bf00ceb982558973f019", "avbsch@rit.edu"), (327723237, 3000, "Cody", "Jeremy", "jcody", "1b4c73d6169f4403ad70bf00ceb982558973f019", "jacsch@rit.edu"), 
+(334555500, 3000, "Gleghorn", "Michael", "mgleghorn", "1b4c73d6169f4403ad70bf00ceb982558973f019", "mlgsch@rit.edu"), (350012300, 3010, "Connelly", "Sandi", "sconnelly", "1b4c73d6169f4403ad70bf00ceb982558973f019", "sjcsbi@rit.edu"), 
+(400444000, 4000, "Day", "Steven", "sday", "1b4c73d6169f4403ad70bf00ceb982558973f019", "steven.day@rit.edu"), (401234567, 4000, "Gaborski", "Tom", "tgaborski", "1b4c73d6169f4403ad70bf00ceb982558973f019", "trgbme@rit.edu"), 
+(429845600, 4005, "Borkholder", "David", "dborkholder", "1b4c73d6169f4403ad70bf00ceb982558973f019", "david.borkholder@rit.edu"), (435998760, 4010, "Fly", "Gerald", "gfly", "1b4c73d6169f4403ad70bf00ceb982558973f019", "gwfeme@rit.edu");
 
 
 DROP TABLE IF EXISTS FacultyPhone;
